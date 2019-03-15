@@ -1,0 +1,10 @@
+<launch>
+
+  <node pkg="laser-odom_calibration" name="calib" type="io_test" output="screen">
+    <param name="file_path" type="string" value="/home/heyijia/ros_ws/OLCalibra_ws/" />
+    <param name="bagname" type="string" value="2019-02-26-12-01-45" />
+    <param name="laser_topic" type="string" value="/scan" />
+    <param name="odom_topic" type="string" value="/calibr_data" />
+  </node>
+
+</launch>
