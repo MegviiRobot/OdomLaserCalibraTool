@@ -25,9 +25,9 @@ void cSolver::calib(std::vector<cSynchronizer::sync_data> &calib_data, int outli
     }
     else
     {
-      std::cout << "calib result. axle: " << res.axle << " l: " << res.l[0] << ' '
-                << res.l[1] << ' ' << res.l[2] << ' ' << " r_l: " << res.radius_l
-                << " r_r: " << res.radius_r << std::endl;
+      std::cout << '\n' << "-------Calibration Results-------" << '\n' << "Axle between wheels: " << res.axle << '\n' << "LiDAR-odom x: " << res.l[0] << '\n'
+                << "LiDAR-odom y: " << res.l[1] << '\n' << "LiDAR-odom yaw: " << res.l[2] << '\n' << "Left wheel radius: " << res.radius_l << '\n'
+                << "Right wheel radius: " << res.radius_r << std::endl;
     }
 
     // Compute residuals
@@ -104,23 +104,23 @@ void cSolver::calib(std::vector<cSynchronizer::sync_data> &calib_data, int outli
 
   Eigen::Matrix3d laser_cov = laser_fim.inverse();
 
-  std::cout << '\n' << "errors (std dev): " << '\n'
-            << "x: " << 1000 * sqrt(laser_cov(0,0)) << " mm" << '\n'
-            << "y: " << 1000 * sqrt(laser_cov(1,1)) << " mm" << '\n'
-            << "theta: " << rad2deg(sqrt(laser_cov(2,2))) << " deg" << std::endl;
+  std::cout << '\n' << "-------Errors (std dev)-------" << '\n'
+            << "LiDAR-odom x: " << 1000 * sqrt(laser_cov(0,0)) << " mm" << '\n'
+            << "LiDAR-odom y: " << 1000 * sqrt(laser_cov(1,1)) << " mm" << '\n'
+            << "LiDAR-odom yaw: " << rad2deg(sqrt(laser_cov(2,2))) << " deg" << std::endl;
 
   // TODO
   // Compute 6*6 FIM
   Eigen::MatrixXd fim = Eigen::MatrixXd::Zero(6,6);
   fim = compute_fim(calib_data,res,laser_fim);
   Eigen::Matrix<double, 6,6> state_cov = fim.inverse();
-
-  std::cout << "Uncertainty r_L  = "<< 1000 * sqrt(state_cov(0,0)) <<" mm \n";
-  std::cout << "Uncertainty r_R  = "<< 1000 * sqrt(state_cov(1,1)) <<" mm \n";
-  std::cout << "Uncertainty axle  = "<< 1000 * sqrt(state_cov(2,2)) <<" mm \n";
-  std::cout << "Uncertainty l_x  = "<< 1000 * sqrt(state_cov(3,3)) <<" mm \n";
-  std::cout << "Uncertainty l_y  = "<< 1000 * sqrt(state_cov(4,4)) <<" mm \n";
-  std::cout << "Uncertainty l_th  = "<< rad2deg( sqrt(state_cov(5,5)) )<<" deg \n";
+  std::cout << '\n' << "-------Uncertainty-------" << '\n';
+  std::cout << "Uncertainty Left wheel radius : "<< 1000 * sqrt(state_cov(0,0)) <<" mm \n";
+  std::cout << "Uncertainty Right wheel radius : "<< 1000 * sqrt(state_cov(1,1)) <<" mm \n";
+  std::cout << "Uncertainty Axle between wheels : "<< 1000 * sqrt(state_cov(2,2)) <<" mm \n";
+  std::cout << "Uncertainty LiDAR-odom-x : "<< 1000 * sqrt(state_cov(3,3)) <<" mm \n";
+  std::cout << "Uncertainty LiDAR-odom-y : "<< 1000 * sqrt(state_cov(4,4)) <<" mm \n";
+  std::cout << "Uncertainty LiDAR-odom-yaw : "<< rad2deg( sqrt(state_cov(5,5)) )<<" deg \n";
 
   return;
 
