@@ -33,9 +33,9 @@ e.g.
 
 ## 3. Authors
 
-1. Zhijie WANG, Research Intern at Megvii, will graduate from Beijing University of Posts & Telecommunications with a bachelor degree in July 2019, contact with <paul dot wangzhijie at outlook dot com>.
+1. Zhijie WANG, Research Intern at Megvii, will graduate from Beijing University of Posts & Telecommunications with a bachelor degree in July 2019, contact with  (paul dot wangzhijie at outlook dot com).
 
-2. Yijia HE, you can find the chinese version [in his homepage](https://blog.csdn.net/heyijia0327/article/details/88571176), if you have any question, please contact <heyijia at megvii dot com>
+2. Yijia HE, you can find the chinese version [in his homepage](https://blog.csdn.net/heyijia0327/article/details/88571176), if you have any question, please contact (heyijia_2013 at 163 dot com)
 
 3. Xiao Liu, [his homepage](http://www.liuxiao.org/)
 
