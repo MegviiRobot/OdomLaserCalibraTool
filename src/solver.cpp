@@ -383,7 +383,7 @@ void cSolver::compute_disagreement(cSynchronizer::sync_data &calib_data, const c
   }
   else
   {
-    t1 = 0;
+    t1 = 1;
     t2 = 0;
   }
 
