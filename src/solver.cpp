@@ -94,8 +94,8 @@ void cSolver::calib(std::vector<cSynchronizer::sync_data> &calib_data, int outli
 
     /* Now compute the FIM */
     // 论文公式 9 误差的协方差
-//  std::cout <<'\n' << "Noise: " << '\n' << laser_std_x << ' ' << laser_std_y
-//            << ' ' << laser_std_th << std::endl;
+  //  std::cout <<'\n' << "Noise: " << '\n' << laser_std_x << ' ' << laser_std_y
+  //            << ' ' << laser_std_th << std::endl;
 
   Eigen::Matrix3d laser_fim = Eigen::Matrix3d::Zero();
   laser_fim(0,0) = (float)1 / (laser_std_x * laser_std_x);
@@ -123,21 +123,20 @@ void cSolver::calib(std::vector<cSynchronizer::sync_data> &calib_data, int outli
   std::cout << "Uncertainty LiDAR-odom-yaw : "<< rad2deg( sqrt(state_cov(5,5)) )<<" deg \n";
 
   return;
-
 }
 
 bool cSolver::solve(const std::vector<cSynchronizer::sync_data> &calib_data,
                     int mode, double max_cond_number, calib_result &res)
 {
-/*!<!--####################		FIRST STEP: estimate J21 and J22  	#################-->*/
+  /*!<!--####################		FIRST STEP: estimate J21 and J22  	#################-->*/
   double J21, J22;
 
   Eigen::Matrix2d A = Eigen::Matrix2d::Zero();
   Eigen::Vector2d g = Eigen::Vector2d::Zero();
   Eigen::Vector2d L_i = Eigen::Vector2d::Zero();
 
-//  std::cout << "A: " << A << ' ' << "g: " << g << std::endl;
-//  std::cout << "orz.." << std::endl;
+  //  std::cout << "A: " << A << ' ' << "g: " << g << std::endl;
+  //  std::cout << "orz.." << std::endl;
 
   double th_i;
   int n = (int)calib_data.size();
@@ -146,11 +145,11 @@ bool cSolver::solve(const std::vector<cSynchronizer::sync_data> &calib_data,
     const cSynchronizer::sync_data &t = calib_data[i];
     L_i(0) = t.T * t.velocity_left;
     L_i(1) = t.T * t.velocity_right;
-//    std::cout << (L_i * L_i.transpose()) << '\n' << std::endl;
+    //  std::cout << (L_i * L_i.transpose()) << '\n' << std::endl;
     A = A + (L_i * L_i.transpose());           // A = A + L_i'*L_i;  A symmetric
-//    std::cout << (t.scan_match_results[2] * L_i) << std::endl;
-    g = (t.scan_match_results[2] * L_i) + g;   // g = g + L_i'*y_i;  sm :{x , y, theta}
-//    std::cout << "A: " << A << ' ' << "g: " << g << std::endl;
+    //  std::cout << (t.scan_match_results[2] * L_i) << std::endl;
+    g = (t.scan_match_results[2] * L_i) + g;   // g = g + L_i'*L_i;  sm :{x , y, theta}
+    //  std::cout << "A: " << A << ' ' << "g: " << g << std::endl;
   }
 
   // Verify that A isn't singular
@@ -176,7 +175,7 @@ bool cSolver::solve(const std::vector<cSynchronizer::sync_data> &calib_data,
     return 0;
   }
 
-/*!<!--############## 		SECOND STEP: estimate the remaining parameters  		########-->*/
+  /*!<!--############## 		SECOND STEP: estimate the remaining parameters  		########-->*/
   Eigen::MatrixXd M = Eigen::MatrixXd::Zero(5, 5);
   Eigen::MatrixXd M2 = Eigen::MatrixXd::Zero(6, 6);
   Eigen::MatrixXd L_k = Eigen::MatrixXd::Zero(2, 5);
@@ -356,7 +355,6 @@ Eigen::VectorXd cSolver::x_given_lambda(const Eigen::MatrixXd &M, const double &
   Eigen::Vector2d tmp_v = Eigen::Vector2d::Zero(2);
   tmp_v(0) = v0(3);
   tmp_v(1) = v0(4);
-
   double norm = tmp_v.norm();
   double coeff = (v0(0) >= 0 ? 1 : -1) / norm;
   v0 = coeff * v0;

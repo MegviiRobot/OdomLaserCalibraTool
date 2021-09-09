@@ -164,6 +164,7 @@ void cScanMatch::match(const std::vector<messageIO::laserScanData> &scan,
     std::cout.width(3);
     std::cout << progress << "%";
     std::cout << "\b\b\b\b";
+    std::cout << std::flush;
   }
 
   std::cout << '\n' << std::endl;
