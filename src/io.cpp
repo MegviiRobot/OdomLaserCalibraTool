@@ -46,19 +46,20 @@ void messageIO::readDataFromBag(const std::string &bag_name, const std::string &
       laser_data.push_back(tmp);
     }
 
-//    nav_msgs::OdometryConstPtr odom = m.instantiate<nav_msgs::Odometry>();
-//    if (odom != NULL) {
-//      odometerData tmp;
-//      tmp.timestamp = odom->header.stamp;
-//      double r_l = 0.4;
-//      double r_r = 0.4;
-//      double b = 0.7;
-//      double v = odom->twist.twist.linear.x;
-//      double omega = odom->twist.twist.angular.z;
-//      tmp.v_l = (v / r_l) - ((omega * b) / (2 * r_l));
-//      tmp.v_r = (v / r_r) + ((omega * b) / (2 * r_r));
-//      odom_data.push_back(tmp);
-//    }
+   nav_msgs::OdometryConstPtr odom = m.instantiate<nav_msgs::Odometry>();
+   if (odom != NULL) {
+     odometerData tmp;
+     tmp.timestamp = odom->header.stamp;
+     double r_l = 0.2/2.0; //0.141/2.0;
+     double r_r = 0.2/2.0; //0.141/2.0;
+     double b = 0.48342; //0.42; //0.3819;
+     double v = odom->twist.twist.linear.x;
+     double omega = odom->twist.twist.angular.z;
+     //tmp.v_l tmp.v_r rad/s
+     tmp.v_l = (v / r_l) - ((omega * b) / (2 * r_l));
+     tmp.v_r = (v / r_r) + ((omega * b) / (2 * r_r));
+     odom_data.push_back(tmp);
+   }
 
 //    sensor_msgs::JointStateConstPtr odom = m.instantiate<sensor_msgs::JointState>();
 //    if (odom != NULL) {
@@ -69,14 +70,14 @@ void messageIO::readDataFromBag(const std::string &bag_name, const std::string &
 //      odom_data.push_back(tmp);
 //    }
 //
-    geometry_msgs::Vector3StampedConstPtr odom = m.instantiate<geometry_msgs::Vector3Stamped>();
-    if (odom != NULL) {
-      odometerData tmp;
-      tmp.timestamp = odom->header.stamp;
-      tmp.v_l = odom->vector.x;
-      tmp.v_r = odom->vector.y;
-      odom_data.push_back(tmp);
-    }
+    // geometry_msgs::Vector3StampedConstPtr odom = m.instantiate<geometry_msgs::Vector3Stamped>();
+    // if (odom != NULL) {
+    //   odometerData tmp;
+    //   tmp.timestamp = odom->header.stamp;
+    //   tmp.v_l = odom->vector.x;
+    //   tmp.v_r = odom->vector.y;
+    //   odom_data.push_back(tmp);
+    // }
   }
 
   // std::cout << "laser size: " << laser_data.size() << '\n' << "odom size: " << odom_data.size() << std::endl;
